@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    Gráficos
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <!-- Data Tables -->
+  <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet">
+</head>
+
+<body class="g-sidenav-show  bg-gray-200">
+
+  <!--Side Bar-->
+  <aside
+    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
+    id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0">
+
+        <span class="ms-1 font-weight-bold text-white">
+          <h3
+            style="color: white; font-size: 150% ; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            Cadastro KPIs</h3>
+        </span>
+      </a>
+    </div>
+    <hr class="horizontal light mt-5 mb-2">
+    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-white active bg-gradient-info" href="Graficos.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Gráficos</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="Cadastro.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Cadastro de KPI</span>
+          </a>
+        </li>
+
+        <hr>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="sign-in.html" id="botaoLogout">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Logout</span>
+          </a>
+        </li>
+
+
+      </ul>
+    </div>
+
+  </aside>
+
+
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+    <div class="container-fluid py-4">
+
+      <!-- Modal CONFIRMAR DELETE-->
+      <div class="modal fade" id="modalConfirmarDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Deletar Dado KPI</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Deseja realmente deletar o dado kpi selecionado? Essa ação não poderá ser desfeita.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary mb-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn bg-gradient-danger mb-2"
+                onclick="DeletarDadoKpi(idDelete)">Deletar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal UPDATE-->
+      <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Atualizar Dado KPI</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+              <form role="form" class="text-start" id="kpiUpdateForm">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label"></label>
+                  <input type="month" class="form-control" id="mesReferenciaUpdateDadoKpi" required
+                    data-parsley-errors-container="#erroupdatemes" data-parsley-length="[7, 7]"
+                    data-parsley-error-message="Favor selecionar uma data válida.">
+                </div>
+                <div class="margin-top10" id="erroupdatemes"></div>
+
+                <div class="input-group input-group-outline mb-3">
+                  <label class="form-label">Valor Esperado</label>
+                  <input type="number" class="form-control" id="valorEsperadoUpdateDadoKpi" required
+                    data-parsley-errors-container="#erroupdatevaloresperado"
+                    data-parsley-error-message="Campo obrigatório." onkeydown="return event.keyCode !== 69">
+                </div>
+                <div class="margin-top10" id="erroupdatevaloresperado"></div>
+
+                <div class="input-group input-group-outline mb-3">
+                  <label class="form-label">Valor Obtido</label>
+                  <input type="number" class="form-control" id="valorObtidoUpdateDadoKpi" required
+                    data-parsley-errors-container="#erroupdatevalorobtido"
+                    data-parsley-error-message="Campo obrigatório." onkeydown="return event.keyCode !== 69">
+                </div>
+                <div class="margin-top10" id="erroupdatevalorobtido"></div>
+
+              </form>
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary mb-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn bg-gradient-info mb-2"
+                onclick="AtualizarDadoKpi(idDado, idKpi)">Atualizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal INSERT-->
+      <div class="modal fade" id="modalInsert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" id="insertmodalheader"></div>
+            <div class="modal-body">
+
+
+              <form data-parsley-validate="" role="form" class="text-start" id="kpiInsertForm">
+
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label"></label>
+                  <input type="month" class="form-control" id="mesReferenciaInsertDadoKpi" required
+                    data-parsley-errors-container="#erroinputmes" data-parsley-length="[7, 7]"
+                    data-parsley-error-message="Favor selecionar uma data válida.">
+                </div>
+                <div class="margin-top10" id="erroinputmes"></div>
+
+                <div class="input-group input-group-outline mb-3">
+                  <label class="form-label">Valor Esperado</label>
+                  <input type="number" class="form-control" id="valorEsperadoInsertDadoKpi" required
+                    data-parsley-errors-container="#erroinputvaloresperado"
+                    data-parsley-error-message="Campo obrigatório." onkeydown="return event.keyCode !== 69">
+                </div>
+                <div class="margin-top10" id="erroinputvaloresperado"></div>
+
+                <div class="input-group input-group-outline mb-3">
+                  <label class="form-label">Valor Obtido</label>
+                  <input type="number" class="form-control" id="valorObtidoInsertDadoKpi" required
+                    data-parsley-errors-container="#erroinputvalorobtido"
+                    data-parsley-error-message="Campo obrigatório." onkeydown="return event.keyCode !== 69">
+                </div>
+                <div class="margin-top10" id="erroinputvalorobtido"></div>
+
+              </form>
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary mb-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn bg-gradient-success mb-2" onclick="InserirDadoKpi(kpi)">Inserir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--SELECT DAS KPIS-->
+      <div class="row">
+        <div class="card-body px-0 pb-2">
+          <label style="margin-left: 1%; margin-bottom: 2%;">
+            <h4
+              style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+              KPI:&nbsp</h4>
+          </label>
+          <select name="select" id="selecaokpi"
+            style="width:40%; height: 50%; border-radius: 10px; text-align: center; margin-right: 2%;"
+            onchange="refreshTabela()"> </select>
+
+          <label>
+            <h4
+              style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+              Período:&nbsp</h4>
+          </label>
+          <select name="select" id="selecaoperiodo"
+            style="width:15%;height: 50%; border-radius: 10px;text-align: center;" onchange="refreshTabela()">
+            <option value="3" selected>Trimestral</option>
+            <option value="6" selected>Semestral</option>
+            <option value="12" selected>Anual</option>
+          </select>
+        </div>
+
+
+      </div>
+
+
+      <!--GRÁFICO-->
+      <div class="row mt-0">
+        <!-- <div class="col-lg-4 mt-3 mb-3">  CÓDIGO COMENTADO PARA REMOVER LIMITE DE LARGURA DA TABELA-->
+        <div class="card z-index-2 ">
+          <div class="card-header p-0 position-relative mt-n4 mx-1 z-index-1 bg-transparent">
+            <div id="divgrafico" class="chart-container bg-gradient-dark shadow-dark border-radius-lg py-5 pe-5"
+              style="height:450px">
+              <!-- <div  class="" style="height:400px"> -->
+              <canvas id="chart-line-tasks2" class="chart-canvas"></canvas>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="mb-0 "></h6>
+            <p class="text-sm ">Valores Obtidos/Esperados x Mês</p>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+
+      <!--BOTÃO INSERIR DADO KPI-->
+      <div class="row mt-2">
+        <button type="button" class="open-modalInsert btn bg-gradient-secondary mb-2" data-bs-toggle="modal"
+          data-bs-target="#modalInsert">Inserir novo dado KPI</button>
+      </div>
+
+      <!-- TABELA-->
+      <div class="row">
+        <div class="card-body px-0 pb-2">
+          <div class="table-responsive">
+            <table class="table align-items-center mb-0" style="background-color: rgb(215, 214, 216);"
+              id="tabelaDadosKpis">
+              <thead>
+                <tr>
+                  <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">KPI</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Dado</th> -->
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mês Referência
+                  </th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Valor Esperado</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Valor Obtido</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">EDITAR</th>
+                </tr>
+              </thead>
+
+              <tbody id="linhastabelaDadosKpi"> </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <!--   Core JS Files   -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $.ajaxSetup({
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('TokenAutenticacao'));
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 400) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Ops!',
+            text: jqXHR.responseText
+          });
+        }
+        else if (jqXHR.status == 401) {
+          Swal.fire({
+            title: 'Sessão expirada!',
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: 'Ok'
+          }).then((result) => {
+            location.href = "sign-in.html";
+          });
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ocorreu um erro!',
+            text: jqXHR.responseText
+          });
+        }
+      }
+    });
+  </script>
+
+
+  <script> // GET LISTA KPIS PARA O SELECT + PRIMEIRA CONSTRUCAO TABELA   
+    $.ajax({
+      method: "GET",
+      url: "https://kpisapi.aiur.com.br/v1/ListarNomesKpis"
+    }).done(function (resultado) {
+      $(resultado).each(function (index) {
+        if (index == 0) {
+          $("#selecaokpi").append("<option value=\"" + resultado[index].id + "\" selected>" + resultado[index].nome + "</option>");
+        }
+        else {
+          $("#selecaokpi").append("<option value=\"" + resultado[index].id + "\" >" + resultado[index].nome + "</option>");
+        }
+      });
+
+
+      $.ajax({  // O AJAX QUE CRIA A TABELA ESTÁ DENTRO DO OUTRO QUE RECUPERA A LISTA DE KPIS DO SELECT PARA EVITAR QUE A TABELA INICIE ANTES DO SELECT, VOLTANDO ERRO 400 NO GET DA TABELA
+        method: "GET",
+        url: "https://kpisapi.aiur.com.br/v1/ListarDadosDeUmaKpi?idKpi=" + document.getElementById("selecaokpi").value
+      }).done(function (resultado) {
+        $(resultado).each(function (index) {
+
+          $("#linhastabelaDadosKpi").append("<tr id=\"" + index + "TR\">" +
+            // "<td>" + resultado[index].iD_Kpi + "</td>" +
+            // "<td>" + resultado[index].iD_DadoKpi + "</td>" +
+            "<td>" + resultado[index].mesReferencia.substring(0, 7) + "</td>" +
+            "<td>" + resultado[index].valorEsperado.toString().replaceAll('.', ',') + " " + resultado[index].unidadeMedida + "</td>" +
+            "<td>" + resultado[index].valorObtido.toString().replaceAll('.', ',') + " " + resultado[index].unidadeMedida + "</td>" +
+            "<td><i data-id=\"" + resultado[index].iD_DadoKpi + "\" class=\"open-modalUpdate material-icons\" style=\"color: #4254f5; cursor: pointer;\" href=\"#modalUpdate\">edit</i>&emsp;" +
+            "<i data-id=\"" + resultado[index].iD_DadoKpi + "\" class=\"open-modalConfirmarDelete material-icons\" style=\"color: #470000; cursor: pointer;\" href=\"#modalConfirmarDelete\">delete</i></td>" +
+            "</tr>"
+          );
+        });
+
+
+        tabela = $('#tabelaDadosKpis').DataTable({
+          "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.11.4/i18n/pt_br.json"
+          }
+        }
+        );
+        Plotar();
+
+      })
+
+
+    })
+  </script>
+
+  <script> // GET LISTA DADOS KPI - PARA REFRESH DA TABELA NA SELECAO
+    function refreshTabela() {
+
+      tabela.destroy();
+      Plotar();
+      $.ajax({
+        beforeSend: console.log('teste'),
+        method: "GET",
+        url: "https://kpisapi.aiur.com.br/v1/ListarDadosDeUmaKpi?idKpi=" + document.getElementById("selecaokpi").value
+      }).done(function (resultado) {
+        $("#linhastabelaDadosKpi").html("")
+        $(resultado).each(function (index) {
+
+          $("#linhastabelaDadosKpi").append("<tr>" +
+            // "<td>" + resultado[index].iD_Kpi + "</td>" +
+            // "<td>" + resultado[index].iD_DadoKpi + "</td>" +
+            "<td>" + resultado[index].mesReferencia.substring(0, 7) + "</td>" +
+            "<td>" + resultado[index].valorEsperado.toString().replaceAll('.', ',') + " " + resultado[index].unidadeMedida + "</td>" +
+            "<td>" + resultado[index].valorObtido.toString().replaceAll('.', ',') + " " + resultado[index].unidadeMedida + "</td>" +
+            "<td><i data-id=\"" + resultado[index].iD_DadoKpi + "\" class=\"open-modalUpdate material-icons\" style=\"color: #4254f5; cursor: pointer;\" href=\"#modalUpdate\">edit</i>&emsp;" +
+            "<i data-id=\"" + resultado[index].iD_DadoKpi + "\" class=\"open-modalConfirmarDelete material-icons\" style=\"color: #470000; cursor: pointer;\" href=\"#modalConfirmarDelete\">delete</i></td>" +
+            "</tr>"
+          );
+        });
+
+
+        tabela = $('#tabelaDadosKpis').DataTable({
+          "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.11.4/i18n/pt_br.json"
+          }
+        });
+
+      })
+    }
+
+
+
+  </script>
+
+  <script> // INSERIR DADO KPI
+    function InserirDadoKpi(kpi) {
+      var objRequisicao = {
+        kpi: kpi,
+        mesReferencia: ($("#mesReferenciaInsertDadoKpi").val() + "-01T00:00:00.000Z"),
+        valorEsperado: $("#valorEsperadoInsertDadoKpi").val().replaceAll(',', '.'),
+        valorObtido: $("#valorObtidoInsertDadoKpi").val().replaceAll(',', '.')
+      };
+      var jsonRequisicao = JSON.stringify(objRequisicao);
+      if ($("#kpiInsertForm").parsley().validate()) {
+        $.ajax({
+          method: "POST",
+          url: "https://kpisapi.aiur.com.br/v1/InserirDadoKPI",
+          data: jsonRequisicao,
+          contentType: "application/json"
+        }).done(function (resultado) {
+
+          console.log(resultado);
+          refreshTabela();
+          $('#modalInsert').modal('hide');
+          Toast.fire({
+            icon: 'success',
+            title: 'Dado inserido com sucesso!'
+          })
+        })
+      }
+    }
+  </script>
+
+  <script> // DELETAR DADO KPI
+    function DeletarDadoKpi(id) {
+      $.ajax({
+        method: "DELETE",
+        url: "https://kpisapi.aiur.com.br/v1/DeletarDadoKPI?id=" + id,
+      }).done(function (resultado) {
+        console.log(resultado);
+        refreshTabela();
+        $('#modalConfirmarDelete').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Dado deletado com sucesso!'
+        })
+      })
+    }
+
+  </script>
+
+  <script> // UPDATE DADO KPI
+    function AtualizarDadoKpi(idDado, idKpi) {
+      var objRequisicao = {
+        id: idDado,
+        kpi: idKpi,
+        mesReferencia: ($("#mesReferenciaUpdateDadoKpi").val() + "-01T00:00:00.000Z"),
+        valorEsperado: $("#valorEsperadoUpdateDadoKpi").val().replaceAll(',', '.'),
+        valorObtido: $("#valorObtidoUpdateDadoKpi").val().replaceAll(',', '.')
+      };
+      var jsonRequisicao = JSON.stringify(objRequisicao);
+      console.log(jsonRequisicao);
+      if ($("#kpiUpdateForm").parsley().validate()) {
+        $.ajax({
+          method: "PUT",
+          url: "https://kpisapi.aiur.com.br/v1/AtualizarDadoKPI",
+          data: jsonRequisicao,
+          contentType: "application/json"
+        }).done(function (resultado) {
+          console.log(resultado);
+          refreshTabela();
+          Toast.fire({
+            icon: 'success',
+            title: 'Dado alterado com sucesso!'
+          })
+          $('#modalUpdate').modal('hide');
+        })
+      }
+    }
+  </script>
+
+  <script> //SCRIPT GRÁFICO 
+
+    function Plotar() {
+
+      const xmlhttp = new XMLHttpRequest();
+
+      const nomeKpi = document.getElementById('selecaokpi').value;
+      const meses = document.getElementById('selecaoperiodo').value;
+
+      var url = `https://kpisapi.aiur.com.br/v1/SelecionarBaseTabela?nome=${nomeKpi}&meses=${meses}`;
+
+      xmlhttp.open("GET", url, true);
+      xmlhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('TokenAutenticacao'));
+
+      xmlhttp.send();
+
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var data = JSON.parse(this.responseText);
+          //console.log(data);
+          var mes = data.map(function (elem) {
+            return elem.mesReferencia;
+          });
+          //console.log(mes);
+          var valorEsperado = data.map(function (elem) {
+            return elem.valorEsperado;
+
+          });
+          var valorObtido = data.map(function (elem) {
+            return elem.valorObtido;
+
+          });
+
+          $('#chart-line-tasks2').remove();
+          $('#divgrafico').append('<canvas id="chart-line-tasks2"></canvas>');
+
+          const ctx = document.getElementById("chart-line-tasks2").getContext('2d');
+          const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: mes,
+              datasets: [{
+                label: 'Valor Obtido',
+                tension: 0,
+                borderWidth: 0,
+                pointRadius: 5,
+                pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                pointBorderColor: "transparent",
+                borderColor: "rgba(66, 135, 245, .8)",
+                borderWidth: 4,
+                backgroundColor: "transparent",
+                fill: true,
+                maxBarThickness: 6,
+                data: valorObtido,
+              }, {
+                label: 'Valor Esperado',
+                tension: 0,
+                borderWidth: 0,
+                pointRadius: 5,
+                pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                pointBorderColor: "transparent",
+                borderColor: "rgba(255, 255, 255, .6)",
+                borderWidth: 4,
+                backgroundColor: "transparent",
+                fill: true,
+                maxBarThickness: 6,
+                data: valorEsperado,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  labels: {
+                    color: "rgba(255, 255, 255, .8)"
+                  },
+                  display: true,
+                }
+              },
+              interaction: {
+                intersect: false,
+                mode: 'index',
+              },
+              scales: {
+                y: {
+                  grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: false,
+                    borderDash: [5, 5],
+                    color: 'rgba(255, 255, 255, .2)'
+                  },
+                  ticks: {
+                    display: true,
+                    padding: 10,
+                    color: '#f8f9fa',
+                    font: {
+                      size: 14,
+                      weight: 300,
+                      family: "Roboto",
+                      style: 'normal',
+                      lineHeight: 2
+                    },
+                  }
+                },
+                x: {
+                  type: 'time',
+                  time: {
+                    unit: 'month'
+                  },
+                  grid: {
+                    drawBorder: false,
+                    display: false,
+                    drawOnChartArea: false,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                  },
+                  ticks: {
+                    display: true,
+                    color: '#f8f9fa',
+                    padding: 10,
+                    font: {
+                      size: 14,
+                      weight: 300,
+                      family: "Roboto",
+                      style: 'normal',
+                      lineHeight: 2
+                    },
+                  }
+                },
+              },
+            },
+          });
+
+        }
+      }
+    }
+
+  </script>
+
+  <script> // SCRIPT PARA PASSAR OS IDS PARA DENTRO DOS MODALS
+    $(document).on("click", ".open-modalConfirmarDelete", function () {
+      idDelete = $(this).data('id');
+      $('#modalConfirmarDelete').modal('show');
+    });
+
+    $(document).on("click", ".open-modalUpdate", function () {
+      idDado = $(this).data('id');
+      idKpi = document.getElementById("selecaokpi").value;
+      $('#modalUpdate').modal('show');
+    });
+
+    $(document).on("click", ".open-modalInsert", function () {
+      kpi = document.getElementById("selecaokpi").value;
+      nomekpi = $("#selecaokpi option:selected").text();
+      $("#insertmodalheader").html("<h5 class=\"modal-title\" id=\"exampleModalLabel\">Inserir Dado na KPI " + nomekpi + "</h5><button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>");
+      console.log($("#insertmodalheader"));
+      $('#modalInsert').modal('show');
+    });
+  </script>
+
+  <script> // SCRIPT TOAST (SWEETALERTS) SUCCESS
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+  </script>
+
+
+
+
+  <script> // SIDENAV SCROLLBAR
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+
+  <script> // SCRIPT PARA LIMPAR LOCALSTORAGE (TOKEN) QUANDO DAR LOGOUT
+    $('#botaoLogout').click(function (event) {
+      var href = this.href;
+      event.preventDefault();
+      localStorage.clear();
+      window.location = href;
+    });
+  </script>
+</body>
+
+</html>

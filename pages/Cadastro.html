@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    KPI
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <!-- Data Tables -->
+  <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet">
+</head>
+
+<body class="g-sidenav-show  bg-gray-200">
+
+  <!--Side Bar-->
+
+  <aside
+    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
+    id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0">
+
+        <span class="ms-1 font-weight-bold text-white">
+          <h3
+            style="color: white; font-size: 150% ; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            Cadastro KPIs</h3>
+        </span>
+      </a>
+    </div>
+    <hr class="horizontal light mt-5 mb-2">
+    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-white " href="Graficos.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Gráficos</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white active bg-gradient-info" href="Cadastro.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Cadastro de KPI</span>
+          </a>
+        </li>
+        <hr>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="sign-in.html" id="botaoLogout">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </aside>
+
+  <!--Área de cadastro -->
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <main class="main-content  mt-0">
+      <div class="page-header align-items-start min-vh-100"
+        style="background-image: url('../assets/img/graficos1.jpg')">
+        <span class="mask bg-gradient-dark opacity-6"></span>
+        <div class="container my-auto">
+          <div class="row">
+            <div class="col-lg-4 col-md-8 col-12 mx-auto">
+              <div class="card z-index-0 fadeIn3 fadeInBottom">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                  <div class="bg-gradient-info shadow-info border-radius-lg py-3 pe-1">
+                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Cadastro de KPI</h4>
+
+                  </div>
+                </div>
+                <div class="card-body">
+                  <form role="form" class="text-start" id="kpiInsertForm" data-parsley-validate>
+                    <div class="input-group input-group-outline my-3">
+                      <label class="form-label">Nome</label>
+                      <input type="text" class="form-control" id="nomeInsertKpi" required data-parsley-length="[5, 255]"
+                        data-parsley-errors-container="#erroInsertNome">
+                    </div>
+                    <div class="margin-top10" id="erroInsertNome"></div>
+
+                    <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Unidade de Medida</label>
+                      <input type="text" class="form-control" id="unidadeMedidaInsertKpi" required
+                        data-parsley-length="[5, 255]" data-parsley-errors-container="#erroInsertUnidadeMedida">
+                    </div>
+                    <div class="margin-top10" id="erroInsertUnidadeMedida"></div>
+
+                    <div class="form-check form-switch d-flex align-items-center mb-3">
+                      <input class="form-check-input" type="checkbox" id="statusInsertKpi" checked>
+                      <label class="form-check-label mb-0 ms-2" for="statusInsertKpi">Ativa</label>
+                    </div>
+
+                    <div class="text-center">
+                      <button class="btn bg-gradient-info w-100 my-4 mb-2">Inserir KPI</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal CONFIRMAR DELETE-->
+      <div class="modal fade" id="modalConfirmarDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Deletar KPI</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Deseja realmente deletar a KPI selecionada? Essa ação não poderá ser desfeita.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary mb-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn bg-gradient-danger mb-2" onclick="DeletarKpi(idDelete)">Deletar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal UPDATE-->
+      <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Atualizar KPI</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form role="form" class="text-start" id="kpiUpdateForm" data-parsley-validate>
+
+
+                <!-- <div class="input-group input-group-outline my-3">
+                  <label class="form-label"></label>
+                  <input type="month" class="form-control" id="mesReferenciaUpdateDadoKpi" required
+                  data-parsley-errors-container="#erroupdatemes" data-parsley-error-message="Campo obrigatório.">
+                </div>
+                <div class="margin-top10" id="erroupdatemes"></div>-->
+
+                <div class="input-group input-group-outline mb-3">
+                  <label class="form-label">Nome</label>
+                  <input class="form-control" id="nomeKpi" required data-parsley-length="[5, 255]"
+                    data-parsley-errors-container="#erroUpdateNome">
+                </div>
+                <div class="margin-top10" id="erroUpdateNome"></div>
+
+                <div class="input-group input-group-outline mb-3">
+                  <label class="form-label">Unidade de Medida</label>
+                  <input class="form-control" id="unidadeMedidaKpi" required data-parsley-length="[5, 255]"
+                    data-parsley-errors-container="#erroUpdateUnidadeMedida">
+                </div>
+                <div class="margin-top10" id="erroUpdateUnidadeMedida"></div>
+
+
+                <div class="form-check form-switch d-flex align-items-center mb-3">
+                  <input class="form-check-input" type="checkbox" id="statusAlterarKpi" checked>
+                  <label class="form-check-label mb-0 ms-2" for="statusInsertKpi">Ativa</label>
+                </div>
+
+              </form>
+
+            </div>
+
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary mb-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn bg-gradient-info mb-2" onclick="AlterarKpi(idKpi)">Atualizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!--TABELA DE KPI'S-->
+
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive">
+          <table class="table align-items-center mb-0" style="background-color: rgb(215, 214, 216);" id="tabelaKpis">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Unidade de Medida
+                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Editar</th>
+              </tr>
+            </thead>
+
+            <tbody id="linhastabela"> </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </main>
+  </main>
+
+
+
+  <!--FIM DA TABELA-->
+
+  <!--   Core JS Files   -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+  <script src="../assets/js/traducaoParsley.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $.ajaxSetup({
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('TokenAutenticacao'));
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 400) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Ops!',
+            text: jqXHR.responseText
+          });
+        }
+        else if (jqXHR.status == 401) {
+          Swal.fire({
+            title: 'Sessão expirada!',
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: 'Ok'
+          }).then((result) => {
+            location.href = "sign-in.html";
+          });
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ocorreu um erro!',
+            text: jqXHR.responseText
+          });
+        }
+      }
+    });
+  </script>
+
+
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+
+  <script>
+    function bordaAzul() {
+      document.getElementById("inputs").style.borderColor = "blue";
+    }
+  </script>
+
+
+  <script> // GET LISTA KPIS
+    $.ajax({
+      method: "GET",
+      url: "https://kpisapi.aiur.com.br/v1/ListarKPIs"
+    }).done(function (resultado) {
+      $(resultado).each(function (index) {
+        var statustexto = "";
+        if (resultado[index].status) {
+          statustexto = "Ativo"
+        }
+        else {
+          statustexto = "Inativo"
+        }
+
+        $("#linhastabela").append("<tr>" +
+          "<td>" + resultado[index].id + "</td>" +
+          "<td>" + resultado[index].nome + "</td>" +
+          "<td>" + resultado[index].unidadeMedida + "</td>" +
+          "<td>" + statustexto + "</td>" +
+          "<td><i data-id=\"" + resultado[index].id + "\" class=\"open-modalUpdate material-icons\" style=\"color: #4254f5; cursor: pointer;\" href=\"#modalUpdate\">edit</i>&emsp;" +
+          "<i data-id=\"" + resultado[index].id + "\" class=\"open-modalConfirmarDelete material-icons\" style=\"color: #470000; cursor: pointer;\" href=\"#modalConfirmarDelete\">delete</i></td>" +
+          "</tr>"
+        );
+      });
+
+
+      tabela = $('#tabelaKpis').DataTable({
+        "language": {
+          "url": "https://cdn.datatables.net/plug-ins/1.11.4/i18n/pt_br.json"
+        }
+      });
+
+    })
+  </script>
+
+  <script> // GET LISTA KPIS
+    function refreshTabela() {
+      tabela.destroy();
+      $.ajax({
+        method: "GET",
+        url: "https://kpisapi.aiur.com.br/v1/ListarKPIs"
+      }).done(function (resultado) {
+        $("#linhastabela").html("")
+        $(resultado).each(function (index) {
+          var statustexto = "";
+          if (resultado[index].status) {
+            statustexto = "Ativo"
+          }
+          else {
+            statustexto = "Inativo"
+          }
+
+          $("#linhastabela").append("<tr>" +
+            "<td>" + resultado[index].id + "</td>" +
+            "<td>" + resultado[index].nome + "</td>" +
+            "<td>" + resultado[index].unidadeMedida + "</td>" +
+            "<td>" + statustexto + "</td>" +
+            "<td><i data-id=\"" + resultado[index].id + "\" class=\"open-modalUpdate material-icons\" style=\"color: #4254f5; cursor: pointer;\" href=\"#modalUpdate\">edit</i>&emsp;" +
+            "<i data-id=\"" + resultado[index].id + "\" class=\"open-modalConfirmarDelete material-icons\" style=\"color: #470000; cursor: pointer;\" href=\"#modalConfirmarDelete\">delete</i></td>" +
+            "</tr>"
+          );
+        });
+
+
+
+        tabela = $('#tabelaKpis').DataTable({
+          "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.11.4/i18n/pt_br.json"
+          }
+        });
+
+      })
+    }
+  </script>
+
+  <script> // INSERIR KPI
+    $("#kpiInsertForm").submit(function (e) {
+      e.preventDefault();
+      InserirKpi();
+    })
+
+    function CriarObjetoInserirKPI() {
+
+      var kpi = {
+        nome: $("#nomeInsertKpi").val(),
+        unidadeMedida: $("#unidadeMedidaInsertKpi").val(),
+        status: true
+      };
+
+      if (!($("#statusInsertKpi").is(':checked'))) {
+        kpi.status = false;
+      }
+      console.log($(kpi.nome))
+      return kpi;
+    }
+    function InserirKpi() {
+
+      var objRequisicao = CriarObjetoInserirKPI();
+      var jsonRequisicao = JSON.stringify(objRequisicao);
+      if ($("#kpiInsertForm").parsley().validate()) {
+        $.ajax({
+          method: "POST",
+          url: "https://kpisapi.aiur.com.br/v1/InserirKPI",
+          data: jsonRequisicao,
+          contentType: "application/json"
+        }).done(function (resultado) {
+          console.log(resultado);
+          refreshTabela();
+          $('#kpiInsertForm')[0].reset();
+          $('#modalUpdate').modal('hide');
+          Toast.fire({
+            icon: 'success',
+            title: 'KPI inserida com sucesso!'
+          })
+        })
+      }
+    }
+
+
+  </script>
+
+  <script> // ALTERAR KPI
+    $("#kpiAlterar").submit(function (e) {
+      e.preventDefault();
+      AlterarKpi();
+    })
+
+    function CriarObjetoAlterarKPI(idKpi) {
+
+      var kpi = {
+        id: idKpi,
+        nome: $("#nomeKpi").val(),
+        unidadeMedida: $("#unidadeMedidaKpi").val(),
+        status: true
+      };
+
+      if (!($("#statusAlterarKpi").is(':checked'))) {
+        kpi.status = false;
+      }
+      return kpi;
+    }
+    function AlterarKpi(idKpi) {
+
+      var objRequisicao = CriarObjetoAlterarKPI(idKpi);
+      var jsonRequisicao = JSON.stringify(objRequisicao);
+      if ($("#kpiUpdateForm").parsley().validate()) {
+        $.ajax({
+          method: "PUT",
+          url: "https://kpisapi.aiur.com.br/v1/AtualizarKPI",
+          data: jsonRequisicao,
+          contentType: "application/json"
+        }).done(function (resultado) {
+          console.log(resultado);
+          refreshTabela();
+          $('#modalUpdate').modal('hide');
+          Toast.fire({
+            icon: 'success',
+            title: 'KPI atualizada com sucesso!'
+          })
+        })
+      }
+    }
+  </script>
+
+  <script> // DELETAR KPI
+    $("#kpiDeletar").submit(function (e) {
+      e.preventDefault();
+      DeletarKpi();
+    })
+
+    function DeletarKpi(id) {
+
+      $.ajax({
+        method: "DELETE",
+        url: "https://kpisapi.aiur.com.br/v1/DeletarKPI?id=" + id,
+      }).done(function (resultado) {
+        console.log(resultado);
+        refreshTabela();
+        $('#modalConfirmarDelete').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'KPI deletada com sucesso!'
+        })
+      })
+    }
+
+  </script>
+
+  <script> // SCRIPT PARA PASSAR OS IDS PARA DENTRO DOS MODALS
+    $(document).on("click", ".open-modalConfirmarDelete", function () {
+      idDelete = $(this).data('id');
+      $('#modalConfirmarDelete').modal('show');
+    });
+
+    $(document).on("click", ".open-modalUpdate", function () {
+      idKpi = $(this).data('id');
+      $('#modalUpdate').modal('show');
+    });
+
+
+  </script>
+
+  <script> // SCRIPT TOAST (SWEETALERTS) SUCCESS
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+
+  </script>
+
+  <script> // SCRIPT PARA LIMPAR LOCALSTORAGE (TOKEN) QUANDO DAR LOGOUT
+    $('#botaoLogout').click(function (event) {
+      var href = this.href;
+      event.preventDefault();
+      localStorage.clear();
+      window.location = href;
+    });
+  </script>
+</body>
+
+</html>
